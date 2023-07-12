@@ -1,0 +1,26 @@
+{
+  "name": "fullstackopen_part8",
+  "version": "1.0.0",
+  "description": "Learning graphQL ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7Cedars/fullstackopen-part8.git"
+  },
+  "keywords": [
+    "fullstackopen"
+  ],
+  "author": "THD",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/7Cedars/fullstackopen-part8/issues"
+  },
+  "homepage": "https://github.com/7Cedars/fullstackopen-part8#readme",
+  "dependencies": {
+    "@apollo/server": "^4.7.5",
+    "graphql": "^16.7.1"
+  }
+}
