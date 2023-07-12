@@ -1,0 +1,15 @@
+{
+  "name": "graphqllibrary",
+  "version": "1.0.0",
+  "description": "fullStackOpen Chapter8",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "THD AH ML",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/server": "^4.7.5",
+    "graphql": "^16.7.1"
+  }
+}
