@@ -4,7 +4,9 @@ import { ALL_BOOKS } from './queries'
 const Books = () => {
 
   const result = useQuery(ALL_BOOKS)
-  console.log(result.data.allBooks)
+  if (result.loading) {
+    return <div>loading</div>
+  }
 
   const books = result.data.allBooks
 
