@@ -1,6 +1,6 @@
 const { ApolloServer } = require('@apollo/server')
+const { GraphQLError } = require('graphql')
 const { startStandaloneServer } = require('@apollo/server/standalone')
-const { v1: uuid } = require('uuid')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 const Author = require('./models/author')
@@ -79,7 +79,14 @@ const resolvers = {
       return countAuthor
   }},
   Mutation: {
-    addBook: async (root, args) => {      
+    addBook: async (root, args) => {
+
+      if (args.author.length < 5 || args.title.length < 6 ) {
+        throw new GraphQLError('Title and/or author name too short.', {
+          extensions: { code: 'BAD_USER_INPUT' }
+        })
+      }
+
       let newAuthor = await Author.findOne({ name: args.author })
       if (!newAuthor) {
         const author = new Author({ name: args.author })
@@ -89,6 +96,15 @@ const resolvers = {
       let book = new Book({...args})
       book.author = newAuthor
       return book.save()
+        .catch(error => {
+          throw new GraphQLError('Saving book failed.', {
+            extensions: {
+              code: 'BAD_USER_INPUT',
+              invalidArgs: [args.author, args.title],
+              error
+            }
+          })
+       })
     }, 
     editAuthor: async (root, args) => {
       const author = await Author.findOne({ name: args.name })
