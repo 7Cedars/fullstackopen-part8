@@ -105,7 +105,7 @@ const resolvers = {
     bookCount: async (root) => { 
       let countAuthor = 0
       const books = await Book.find({}).populate('author')
-      console.log(books)
+      // console.log(books)
       books.map(book => {
         if (root.name === book.author.name) countAuthor++ 
       })
@@ -114,11 +114,13 @@ const resolvers = {
   Mutation: {
     addBook: async (root, args, { currentUser } ) => {
 
+      console.log("currentUser at addBook: ", currentUser)
+
       if (!currentUser ) {
         throw new GraphQLError('Not Authorized', {
           extensions: { code: 'BAD_USER_INPUT' }
         })
-      }     
+      } 
 
       if (args.author.length < 5 || args.title.length < 6 ) {
         throw new GraphQLError('Title and/or author name too short.', {
@@ -127,6 +129,7 @@ const resolvers = {
       }
 
       let newAuthor = await Author.findOne({ name: args.author })
+      console.log("newAuthor:" , newAuthor)
       if (!newAuthor) {
         const author = new Author({ name: args.author })
         await author.save()
@@ -146,6 +149,9 @@ const resolvers = {
        })
     }, 
     editAuthor: async (root, args, { currentUser } ) => {
+
+      console.log("currentUser at editAuthor: ", currentUser)
+
       if (!currentUser ) {
         throw new GraphQLError('Not Authorized', {
           extensions: { code: 'BAD_USER_INPUT' }
@@ -188,6 +194,8 @@ const resolvers = {
         username: user.username,
         id: user._id,
       }
+
+      console.log("LOGGING IN AS: ", userForToken.username )
   
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     }

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
+import { useState } from 'react'
+import { useMutation, useQuery } from '@apollo/client'
 import Select from 'react-select';
 import { EDIT_AUTHOR, ALL_BOOKS, ALL_AUTHORS } from './queries'
 
 const EditAuthor = () => {
-  const [ selectedName, setSelectedName ] = useState({label: "none", value: null})
+  const [ selectedName, setSelectedName ] = useState({label: "none", value: "none"})
   const [ setBornTo, setSetBornTo ] = useState(1850) 
   const [ editAuthor ] = useMutation(EDIT_AUTHOR, {
     refetchQueries: [ { query: ALL_AUTHORS }, { query: ALL_BOOKS } ]
@@ -23,8 +23,8 @@ const EditAuthor = () => {
 
     const name = selectedName.value
     editAuthor({  variables: { name, setBornTo } })
-    console.log('edit author: name = ', name, 'setBornTo = ', setBornTo)
-    setSelectedName({label: "none", value: null})
+    console.log('edit author:  ', { name, setBornTo })
+    setSelectedName({label: "none", value: "none"})
     setSetBornTo(1850)
   }
 
