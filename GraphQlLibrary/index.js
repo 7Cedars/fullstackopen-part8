@@ -51,7 +51,7 @@ type Token {
 type Query {
   bookCount: Int!
   authorCount: Int!
-  allBooks(author: String, genre: String): [Book]!
+  allBooks(author: String, genreToSearch: String): [Book]!
   allAuthors: [Author!]!
   me: User
 }
@@ -87,14 +87,16 @@ const resolvers = {
    bookCount: async () => Book.collection.countDocuments(),
    authorCount: async () => Author.collection.countDocuments(),
    allBooks: async (root, args) => {
-    // filters missing
-    const booksList = await Book.find({}).populate('author')
-      if (!args.author && !args.genres) {
-        return booksList
+    // I think this could have been coded more concise, but it works.. 
+    booksList = await Book.find({}).populate('author')
+      if (args.genreToSearch === "all") { 
+        return booksList 
       } else {
-        return booksList.filter(book => book.author.name === args.author )
+        return Book.find({genres: args.genreToSearch}).populate('author')
       }
-      
+      // if (args.author) { 
+      //   return booksList.filter(book => book.author.name === args.author )
+      // }
     },
    allAuthors: async (root, args) => {
     // filters missing
