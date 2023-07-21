@@ -26,19 +26,21 @@ const BookList = ({ books }) => {
   }
 }
 
-const Books = (books) => {
+const Books = () => {
   const [genreToSearch, setGenreToSearch] = useState("all")
   const [savedGenres, SetSavedGenres] = useState([])
-
   const result = useQuery(ALL_BOOKS, {
     variables: { genreToSearch }
   })
+
   if (result.data) {
     const allBooks = result.data.allBooks
-    let allBookGenres = [].concat(...allBooks).map(({ genres }) =>  genres)
-    allBookGenres = Array.from(new Set( allBookGenres.flat()))
-    // https://stackoverflow.com/questions/49860572/how-to-extract-property-of-array-in-nested-array
-    if (savedGenres.length === 0 ) { SetSavedGenres(allBookGenres) } 
+    if (savedGenres.length === 0) {
+      let allBookGenres = [].concat(...allBooks).map(({ genres }) =>  genres)
+      // https://stackoverflow.com/questions/49860572/how-to-extract-property-of-array-in-nested-array
+      allBookGenres = Array.from(new Set( allBookGenres.flat()))
+      SetSavedGenres(allBookGenres)
+    }
     
     return (
       <div>
@@ -48,7 +50,7 @@ const Books = (books) => {
           } 
           <BookList books = { allBooks } /> 
             {savedGenres.map((genre) => (
-              <button onClick={() => setGenreToSearch(genre)} > {genre} </button>
+              <button key = {genre} onClick={() => setGenreToSearch(genre)} > {genre} </button>
             ))
           }
       </div>

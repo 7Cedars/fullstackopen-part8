@@ -16,6 +16,7 @@ const Header = ( {token, logout} ) => {
           <Link style = {styling}  to="/login"> Login </Link>
           : 
           <>
+            <Link style = {styling}  to="/recommend"> Recommendations </Link>
             <Link style = {styling}  to="/add"> Add book </Link>
             <Link style = {styling}  to="/edit"> Edit author </Link>
             <button onClick={logout}>logout</button>

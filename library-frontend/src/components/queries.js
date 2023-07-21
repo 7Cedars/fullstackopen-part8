@@ -26,11 +26,13 @@ export const ALL_BOOKS = gql`
 `
 
 export const ME = gql`
-  query {
+  query Me {
     me {
       username
+      id
+      favoriteGenre
     }
-  }
+}
 `
 
 export const CREATE_BOOK = gql`

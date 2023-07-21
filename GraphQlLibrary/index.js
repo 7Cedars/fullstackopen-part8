@@ -80,9 +80,11 @@ type Mutation {
 
 const resolvers = {
   Query: {
-   me: (root, args, context) => {
+   me: (root, args, { currentUser } ) => {
    // console.log(context)
-    return context.currentUser
+    console.log("currentUser at me: ", currentUser)
+
+    return currentUser
    },
    bookCount: async () => Book.collection.countDocuments(),
    authorCount: async () => Author.collection.countDocuments(),
