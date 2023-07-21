@@ -38,7 +38,7 @@ const Books = () => {
     if (savedGenres.length === 0) {
       let allBookGenres = [].concat(...allBooks).map(({ genres }) =>  genres)
       // https://stackoverflow.com/questions/49860572/how-to-extract-property-of-array-in-nested-array
-      allBookGenres = Array.from(new Set( allBookGenres.flat()))
+      allBookGenres = Array.from(new Set( allBookGenres.flat())).concat("all")
       SetSavedGenres(allBookGenres)
     }
     
