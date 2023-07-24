@@ -34,6 +34,8 @@ const resolvers = {
     },
   }, 
   Author: {
+    // NB: note that I only make one additional server query to resolve all bookCounts. 
+    // It is not the most beautiful solution (and it's quiet slow) but works.  
     bookCount: async (root) => { 
       let countAuthor = 0
       const books = await Book.find({}).populate('author')
