@@ -19,11 +19,11 @@ const resolvers = {
    allBooks: async (root, args) => {
     // I think this could have been coded more concise, but it works.. 
     booksList = await Book.find({}).populate('author')
-      if (args.genreToSearch === "all" || !args.genreToSearch) { 
-        return booksList 
-      } else {
-        return Book.find({genres: args.genreToSearch}).populate('author')
-      }
+    if (args.genreToSearch === "all" || !args.genreToSearch) { 
+      return booksList 
+    } else {
+      return Book.find({genres: args.genreToSearch}).populate('author')
+    }
       // if (args.author) { 
       //   return booksList.filter(book => book.author.name === args.author )
       // }

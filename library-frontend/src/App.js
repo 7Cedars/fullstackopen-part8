@@ -8,7 +8,7 @@ import LoginForm from "./components/LoginForm";
 import Recommend from "./components/Recommend";
 import { useApolloClient, useQuery, useSubscription } from '@apollo/client'
 import { useState, useEffect } from "react";
-import { ME, BOOK_ADDED } from './components/queries'
+import { ME, BOOK_ADDED, ALL_BOOKS } from './components/queries'
 
 const App = () => {  
   const client = useApolloClient()
@@ -31,7 +31,16 @@ const App = () => {
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
       // console.log("SUBSCRIPTION DATA: ", data)
-      alert(`${data.data.bookAdded.title}, by ${data.data.bookAdded.author.name}, has been added to the library.`)
+      const addedBook = data.data.bookAdded
+      alert(`${addedBook.title}, by ${addedBook.author.name}, has been added to the library.`)
+
+      client.cache.updateQuery({ query: ALL_BOOKS, variables: {genreToSearch: 'all'} }, ( {allBooks} ) => {
+        console.log("DATA at updateQuery :", data)
+        return {
+          allBooks: allBooks.concat(addedBook),
+        }
+      })
+
     }
   })
 
