@@ -6,9 +6,9 @@ import Header from "./components/Header";
 import EditAuthor from "./components/EditAuthor";
 import LoginForm from "./components/LoginForm";
 import Recommend from "./components/Recommend";
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useApolloClient, useQuery, useSubscription } from '@apollo/client'
 import { useState, useEffect } from "react";
-import { ME } from './components/queries'
+import { ME, BOOK_ADDED } from './components/queries'
 
 const App = () => {  
   const client = useApolloClient()
@@ -25,8 +25,15 @@ const App = () => {
     if ( data ) {setUserData(data)} 
   }, [data])
 
-  console.log("token at App: ", token)
-  console.log("userdata at App: ", userData)
+  // console.log("token at App: ", token)
+  // console.log("userdata at App: ", userData)
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      // console.log("SUBSCRIPTION DATA: ", data)
+      alert(`${data.data.bookAdded.title}, by ${data.data.bookAdded.author.name}, has been added to the library.`)
+    }
+  })
 
   const logout = () => {
     setToken(null)

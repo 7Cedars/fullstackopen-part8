@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Header = ( {token, logout} ) => {
 
-  console.log("token at Header: ", token)
+  // console.log("token at Header: ", token)
 
   const styling  = {  
     padding: "1em" 

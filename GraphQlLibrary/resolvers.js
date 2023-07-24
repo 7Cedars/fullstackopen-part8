@@ -46,7 +46,7 @@ const resolvers = {
   Mutation: {
     addBook: async (root, args, { currentUser } ) => {
 
-      console.log("currentUser at addBook: ", currentUser)
+      // console.log("currentUser at addBook: ", currentUser)
 
       if (!currentUser ) {
         throw new GraphQLError('Not Authorized', {
@@ -89,7 +89,7 @@ const resolvers = {
     },     
     editAuthor: async (root, args, { currentUser } ) => {
 
-      console.log("currentUser at editAuthor: ", currentUser)
+      // console.log("currentUser at editAuthor: ", currentUser)
 
       if (!currentUser ) {
         throw new GraphQLError('Not Authorized', {
@@ -134,7 +134,7 @@ const resolvers = {
         id: user._id,
       }
 
-      console.log("LOGGING IN AS: ", userForToken.username )
+      // console.log("LOGGING IN AS: ", userForToken.username )
   
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     }
